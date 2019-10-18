@@ -3,11 +3,11 @@ import axios from "axios";
 import { Form, Field, withFormik } from "formik";
 import * as Yup from "yup";
 
-const UserForm = ({ values, touched, errors }) => {
+const UserForm = ({ values, touched, errors, status }) => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
-
-    })
+        status && setUsers(users => [...users, status])
+    }, [status]);
 
     return (
         <div className="user-form">
@@ -29,6 +29,13 @@ const UserForm = ({ values, touched, errors }) => {
                 </label>
                 <button type="submit">Submit</button>
             </Form>
+            {users.map(user => (
+                <ul key={user.id}>
+                    <li>Name: {user.name}</li>
+                    <li>Email: {user.email}</li>
+                    <li>Password: {user.password}</li>
+                </ul>
+            ))}
         </div>
     )
 }
